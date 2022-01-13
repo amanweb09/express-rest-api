@@ -6,9 +6,9 @@ const userController = () => {
             return res.status(200).json({
                 user: {
                     name: req.name,
-                    _id: user._id,
-                    email: user.email,
-                    tel: user.tel
+                    _id: req._id,
+                    email: req.email,
+                    tel: req.tel
                 }
             })
         }

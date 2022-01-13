@@ -4,7 +4,8 @@ const Users = require('../models/User');
 class UserService {
     async findUser(filter) {
         try {
-            return await Users.findOne(filter);
+            const user = await Users.findOne(filter);
+            return user;
         } catch (error) {
             console.log(error);
             throw error
@@ -15,7 +16,7 @@ class UserService {
         try {
             return await newUser.save()
         } catch (error) {
-            console.log(error);
+            console.log(error)
             throw error
         }
     }

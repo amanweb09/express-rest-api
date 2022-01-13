@@ -8,22 +8,20 @@ const authenticate = async (req, res, next) => {
         return res.status(401).json({ err: 'Unauthorized access!' })
     }
 
-    const validity = await tokenService.validateToken(accessToken)
+    const payload = await tokenService.validateToken(accessToken)
 
-    if (validity) {
-        const user = await userService.findUser({ _id: validity._id });
+    if (payload) {
+        const authUser = await userService.findUser({ _id: payload._id });
+        req._id = authUser._id;
+        req.name = authUser.name;
+        req.email = authUser.email;
+        req.tel = authUser.tel;
 
-        if (user) {
-            req._id = user._id;
-            req.name = user.name;
-            req.email = user.email;
-            req.tel = user.tel;
-
-            return next()
-        }
+        return next()
     }
 
     return res.status(401).json({ err: 'Unauthorized access!' })
+
 }
 
 module.exports = authenticate;

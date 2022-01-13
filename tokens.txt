@@ -9,5 +9,8 @@ rt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWRmMGJiYzQwOWM4MTJlYTJmNzZ
         },
         "totalQty": 2,
         "totalPrice": 1500
-    }
+    },
+    "address": "25B/4 new rohtak rd.",
+    "isPaid": false,
+    "promoApplied": false
 }

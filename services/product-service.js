@@ -18,6 +18,15 @@ class ProductService {
             return false
         }
     }
+
+    async findProductsByIds(ids) {
+        try {
+            return await Products.find({ _id: { $in: ids } })
+        } catch (error) {
+            console.log(error);
+            return false
+        }
+    }
 }
 
 module.exports = new ProductService()

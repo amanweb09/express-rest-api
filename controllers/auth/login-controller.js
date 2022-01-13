@@ -28,8 +28,12 @@ const loginController = () => {
 
                     try {
                         await user.save()
-                        res.cookie('accessToken', accessToken)
-                        res.cookie('refreshToken', refreshToken)
+                        res.cookie('accessToken', accessToken, {
+                            httpOnly: true
+                        })
+                        res.cookie('refreshToken', refreshToken, {
+                            httpOnly: true
+                        })
 
                         return res.status(200).json({ message: 'Login successful!' })
 
@@ -76,6 +80,9 @@ const loginController = () => {
             }
 
             return res.status(401).json({ err: 'Invalid Refresh Token!' })
+        },
+        logout(req, res) {
+
         }
     }
 }

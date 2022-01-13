@@ -8,7 +8,7 @@ const productController = () => {
             return res.status(200).json({ products })
         },
         async viewProduct(req, res) {
-            const { _id } = req.params;
+            const { _id } = req.body;
 
             const product = await productService.findProduct({ _id })
 

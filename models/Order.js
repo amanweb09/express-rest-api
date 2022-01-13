@@ -30,6 +30,10 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'placed'
+    },
+    paymentType: {
+        type: String,
+        default: 'COD'
     }
 }, { timestamps: true })
 

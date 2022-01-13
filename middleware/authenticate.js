@@ -20,7 +20,7 @@ const authenticate = async (req, res, next) => {
         return next()
     }
 
-    return res.status(401).json({ err: 'Unauthorized access!' })
+    return res.status(401).json({ err: 'Unauthorized access!', expErr: true })
 
 }
 

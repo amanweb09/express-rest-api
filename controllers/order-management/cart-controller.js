@@ -30,33 +30,53 @@ const cartController = () => {
             }
 
             const orderSchema = Joi.object({
-                customerId: Joi.required() ,
-                products: Joi.array().required(),
-                totalPrice: Joi.number().min(100).max(8000).required(),
-                address: Joi.string().min(6).required(),
-                isPaid: Joi.boolean().required(),
-                promoApplied: Joi.boolean().required(),
+                customerId: Joi
+                    .required(),
+                products: Joi
+                    .array()
+                    .required(),
+                totalPrice: Joi
+                    .number()
+                    .min(100)
+                    .max(8000)
+                    .required(),
+                address: Joi
+                    .string()
+                    .min(6)
+                    .required(),
+                isPaid: Joi
+                    .boolean()
+                    .required(),
+                promoApplied: Joi
+                    .boolean()
+                    .required(),
             })
 
             const validateOrder = await orderSchema.validate(orderObj)
 
             if (validateOrder.error) {
                 if (validateOrder.error.name == 'ValidationError') {
-                    return res.status(422).json({ err: validateOrder.error.message })
+                    return res
+                        .status(422)
+                        .json({ err: validateOrder.error.message })
                 }
             }
 
-            
+
             const order = new Order(orderObj)
 
 
             try {
                 const placeOrder = await order.save();
-                return res.status(201).json({ message: 'Order Placed Successfully!' })
+                return res
+                    .status(201)
+                    .json({ message: 'Order Placed Successfully!' })
 
             } catch (error) {
                 console.log(error);
-                return res.status(500).json({ err: 'Something went wrong!' })
+                return res
+                    .status(500)
+                    .json({ err: 'Something went wrong!' })
             }
         }
     }

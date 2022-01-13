@@ -5,7 +5,9 @@ const authenticate = async (req, res, next) => {
     const { accessToken } = req.cookies;
 
     if (!accessToken) {
-        return res.status(401).json({ err: 'Unauthorized access!' })
+        return res
+            .status(401)
+            .json({ err: 'Unauthorized access!' })
     }
 
     const payload = await tokenService.validateToken(accessToken)
@@ -20,7 +22,9 @@ const authenticate = async (req, res, next) => {
         return next()
     }
 
-    return res.status(401).json({ err: 'Unauthorized access!', expErr: true })
+    return res
+        .status(401)
+        .json({ err: 'Unauthorized access!', expErr: true })
 
 }
 

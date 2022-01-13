@@ -12,10 +12,9 @@ const authenticate = require('../middleware/authenticate');
 router.post('/api/signup', signupController().createUser)
 router.post('/api/login', loginController().loginUser);
 router.get('/api/refresh', loginController().renewAccessToken);
-router.post('/api/logout', loginController().logout)
 
 router.get('/api/products', productController().productList);
-router.get('/api/products', productController().viewProduct);
+router.get('/api/product', productController().viewProduct);
 router.post('/api/checkout', authenticate, cartController().processCart);
 
 router.post('/api/profile', authenticate, userController().viewProfile);

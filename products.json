@@ -1,0 +1,62 @@
+[
+    {
+        "title": "Nikon DSLR",
+        "price": 35000,
+        "desc": "dslr camera",
+        "image_pimary": "abc.png",
+        "image_sec": ["bcd.png", "opm.png"],
+        "category": ["a", "b", "c"],
+        "colors": ["black", "gray"],
+        "sizes": ["44mm", "36mm"],
+        "season": "winter",
+        "inStock": true
+    },
+    {
+        "title": "iPhone 13 Pro Max",
+        "price": 120000,
+        "desc": "iphone",
+        "image_pimary": "abc.png",
+        "image_sec": ["bcd.png", "opm.png"],
+        "category": ["a", "b", "c"],
+        "colors": ["black", "gray"],
+        "sizes": ["44mm", "36mm"],
+        "season": "winter",
+        "inStock": true
+    },
+    {
+        "title": "AX T-shirt",
+        "price": 5000,
+        "desc": "tshirt",
+        "image_pimary": "abc.png",
+        "image_sec": ["bcd.png", "opm.png"],
+        "category": ["a", "b", "c"],
+        "colors": ["black", "gray", "white"],
+        "sizes": ["S", "M", "L"],
+        "season": "summer",
+        "inStock": true
+    },
+    {
+        "title": "Denim Jacket",
+        "price": 6000,
+        "desc": "denim jacket",
+        "image_pimary": "abc.png",
+        "image_sec": ["bcd.png", "opm.png"],
+        "category": ["a", "b", "c"],
+        "colors": ["black", "blue"],
+        "sizes": ["M", "L"],
+        "season": "winter",
+        "inStock": false
+    },
+    {
+        "title": "Shoes",
+        "price": 2000,
+        "desc": "Leather shoes",
+        "image_pimary": "abc.png",
+        "image_sec": ["bcd.png", "opm.png"],
+        "category": ["a", "b", "c"],
+        "colors": ["black", "brown"],
+        "sizes": ["8", "9"],
+        "season": "summer",
+        "inStock": true
+    }
+]

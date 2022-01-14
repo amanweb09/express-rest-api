@@ -24,7 +24,16 @@ class OrderService {
     async saveCancellationRequest(reqObj) {
         try {
             const cancellation = new Cancellation(reqObj)
-            return cancellation.save()
+            return await cancellation.save()
+
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+    async viewCancellationRequests(filter) {
+        try {
+            return await Cancellation.find(filter)
 
         } catch (error) {
             console.log(error);

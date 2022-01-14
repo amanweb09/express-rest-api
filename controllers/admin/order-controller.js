@@ -11,7 +11,16 @@ const admin_orderController = () => {
             }
             
             return res.status(200).json({ orders: [] })
-        }
+        },
+        async fetchCancellations(req, res) {
+            const cancellations = await orderService.viewCancellationRequests();
+
+            if (cancellations) {
+                return res.status(200).json({ cancellations })
+            }
+            
+            return res.status(200).json({ cancellations: [] })
+        },
     }
 }
 

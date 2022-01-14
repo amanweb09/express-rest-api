@@ -8,6 +8,7 @@ const productController = require('../controllers/product-managemnt/products-con
 const userController = require('../controllers/user-control/user-controller');
 
 const authenticate = require('../middleware/authenticate');
+const admin = require('../middleware/admin');
 
 router.post('/api/signup', signupController().createUser)
 router.post('/api/login', loginController().loginUser);

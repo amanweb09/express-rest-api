@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
-        required: true,
-        unique: true
+        ref: 'user',
+        required: true
     },
     products: {
         type: Array,

@@ -9,9 +9,9 @@ const cartController = () => {
             //CART STRUCTURE
             // cart: {
             // items: {
-            //     'PRODUCT1_ID': 'PRODUCT1_QTY',
-            //     'PRODUCT2_ID': 'PRODUCT2_QTY',
-            //     'PRODUCT3_ID': 'PRODUCT3_QTY'
+            //     'PRODUCT1_ID': '{PRODUCT1_QTY, COLOR, SIZE}',
+            //     'PRODUCT2_ID': '{PRODUCT1_QTY, COLOR, SIZE}',
+            //     'PRODUCT3_ID': '{PRODUCT1_QTY, COLOR, SIZE}'
             // },
             // totalItems: 5,
             // totalPrice: 1200
@@ -20,12 +20,32 @@ const cartController = () => {
             const { cart, address, isPaid, promoApplied } = req.body;
 
             const products = Object.keys(cart.items)
-
             const productsInCart = await productService.findProductsByIds(products);
+
+            let orderedProducts = [];
+            productsInCart.forEach((product) => {
+                product = {
+                    ...product,
+                    qty: cart.items[product._id].qty,
+                    color: cart.items[product._id].color,
+                    size: cart.items[product._id].size
+                }
+
+                orderedProducts.push(product)
+            })
+            let sortedOrders = []
+            orderedProducts.forEach((product) => {
+                sortedOrders.push({
+                    product: product._doc,
+                    qty: product.qty,
+                    color: product.color,
+                    size: product.size
+                })
+            })
 
             const orderObj = {
                 customerId: req._id,
-                products: productsInCart,
+                products: sortedOrders,
                 totalPrice: cart.totalPrice,
                 address, isPaid, promoApplied
             }

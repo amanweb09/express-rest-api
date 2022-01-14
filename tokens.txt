@@ -2,15 +2,23 @@ at: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWRmMGJiYzQwOWM4MTJlYTJmNzZ
 rt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWRmMGJiYzQwOWM4MTJlYTJmNzZlZjQiLCJpYXQiOjE2NDIwNzQ5OTgsImV4cCI6MTY3MzYzMjU5OH0.KUKsOHiqLewFgVhJqscu_ZxC0U7PdMbqtbeT4iGzEP4
 
 {
-    "cart": {
-        "items": {
-            "61e009551888d5f475a67a6f": 1,
-            "61e009551888d5f475a67a70": 1
-        },
-        "totalQty": 2,
-        "totalPrice": 1500
+  "cart": {
+    "items": {
+      "61e009551888d5f475a67a6f": {
+        "qty": 1,
+        "color": "black",
+        "size": "M"
+      },
+      "61e009551888d5f475a67a71": {
+        "qty": 2,
+        "color": "white",
+        "size": "XL"
+      }
     },
-    "address": "25B/4 new rohtak rd.",
-    "isPaid": false,
-    "promoApplied": false
+    "totalPrice": 2000,
+    "totalItems": 3
+  },
+  "address": "test address h bhai yeh",
+  "isPaid": false,
+  "promoApplied": false
 }

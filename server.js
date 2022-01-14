@@ -14,7 +14,10 @@ const dbConnection = require('./database/connection')
 dbConnection();
 
 const router = require('./router/routes');
+const admin_router = require('./router/admin_routes');
 app.use(router)
+app.use(admin_router)
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}!`)

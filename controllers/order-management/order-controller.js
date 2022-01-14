@@ -1,4 +1,5 @@
 const orderService = require("../../services/order-service");
+const Joi = require('joi');
 
 const orderController = () => {
     return {
@@ -27,6 +28,62 @@ const orderController = () => {
                 console.log(error);
                 return res.status(500).json({ err: 'Something went wrong!' })
             }
+        },
+        async cancelOrder(req, res) {
+            const { orderId, email, tel, reason } = req.body;
+
+            if (!orderId || !email || !tel || !reason) {
+                return res.status(422).json({ err: 'Please fill all the fields!' })
+            }
+
+            const orderById = await orderService.fetchOrderById(orderId)
+
+            if (!orderById) {
+                return res.status(404).json({ err: 'No order found with this ID!' })
+            }
+
+            const cancellationObj = {
+                orderId, email, tel, reason
+            }
+
+            const JoiCancellationSchema = Joi
+                .object({
+                    orderId: Joi
+                        .string()
+                        .required(),
+                    email: Joi
+                        .string()
+                        .min(2)
+                        .email({
+                            minDomainSegments: 2,
+                            tlds: {
+                                allow: ['com', 'net', 'in']
+                            }
+                        })
+                        .required(),
+                    tel: Joi
+                        .string()
+                        .required(),
+                    reason: Joi
+                        .string()
+                        .required()
+                })
+
+            const validation = JoiCancellationSchema.validate(cancellationObj);
+
+            if (validation.error) {
+                if (validation.error.name == 'ValidationError') {
+                    return res.status(422).json(validation.error.message)
+                }
+            }
+
+            const response = await orderService.saveCancellationRequest(cancellationObj);
+
+            if (response) {
+                return res.status(201).json({ message: 'Request Saved!' })
+            }
+
+            return res.status(500).json({ err: 'Something went wrong!' })
         }
     }
 }

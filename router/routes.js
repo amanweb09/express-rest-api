@@ -15,7 +15,9 @@ router.get('/api/refresh', loginController().renewAccessToken);
 
 router.get('/api/products', productController().productList);
 router.get('/api/product', productController().viewProduct);
+
 router.post('/api/checkout', authenticate, cartController().processCart);
+router.post('/api/cancel-order', authenticate, orderController().cancelOrder);
 
 router.post('/api/profile', authenticate, userController().viewProfile);
 router.post('/api/orders', authenticate, orderController().fetchOrders);

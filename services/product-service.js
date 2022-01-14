@@ -15,7 +15,7 @@ class ProductService {
             return await Products.findById(_id)
         } catch (error) {
             console.log(error);
-            return false
+            return null
         }
     }
 

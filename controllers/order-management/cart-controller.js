@@ -99,7 +99,8 @@ const cartController = () => {
                     return res.status(200).json({
                         newAmt,
                         discountType: "per",
-                        isApplied: true
+                        isApplied: true,
+                        canApply: false
                     })
                 }
                 else if (promo.discountAmt && !promo.discountPer) {
@@ -107,7 +108,8 @@ const cartController = () => {
                     return res.status(200).json({
                         newAmt,
                         discountType: "amt",
-                        isApplied: true
+                        isApplied: true,
+                        canApply: false
                     })
                 }
             }
@@ -133,14 +135,14 @@ const cartController = () => {
 
                 return res.status(200).json({
                     newAmt,
-                    isRemoved: true
+                    canApply: true
                 })
             }
             else if (promo && discountType === 'amt') {
                 const newAmt = Math.round(cartAmount + promo.discountAmt);
                 return res.status(200).json({
                     newAmt,
-                    isRemoved: true
+                    canApply: true
                 })
             }
 

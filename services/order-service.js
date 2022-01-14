@@ -1,6 +1,7 @@
 const Cancellation = require("../models/Cancellation");
 const Orders = require("../models/Order");
 const PromoCodes = require("../models/Promo-code");
+const Reviews = require("../models/Reviews");
 
 class OrderService {
     async fetchOrder(filter) {
@@ -52,6 +53,16 @@ class OrderService {
         } catch (error) {
             console.log(error);
             throw error;
+        }
+    }
+    async saveReview(reqObj) {
+        try {
+            const review = new Reviews(reqObj)
+            return await review.save()
+
+        } catch (error) {
+            console.log(error);
+            return null;
         }
     }
 }

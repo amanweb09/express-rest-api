@@ -1,24 +1,28 @@
 const mongoose = require('mongoose');
 
-const cancellationSchema = new mongoose.Schema({
-    orderId: {
+const blogSchema = new mongoose.Schema({
+    title: {
         type: String,
         required: true,
         unique: true
     },
-    email: {
+    slug: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    desc: {
         type: String,
         required: true
     },
-    tel: {
+    heroImg: {
         type: String,
         required: true
     },
-    reason: {
+    html: {
         type: String,
         required: true
     }
 }, { timestamps: true })
 
-
-module.exports = new mongoose.model('cancellations', cancellationSchema, 'cancellations');
+module.exports = new mongoose.model('blogs', blogSchema, 'blogs');

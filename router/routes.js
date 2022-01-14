@@ -5,6 +5,7 @@ const signupController = require('../controllers/auth/signup-controller');
 const cartController = require('../controllers/order-management/cart-controller');
 const orderController = require('../controllers/order-management/order-controller');
 const productController = require('../controllers/product-managemnt/products-controller');
+const blogController = require('../controllers/user-control/blog-controller');
 const contactController = require('../controllers/user-control/contact-controller');
 const userController = require('../controllers/user-control/user-controller');
 
@@ -23,5 +24,9 @@ router.post('/api/cancel-order', authenticate, orderController().cancelOrder);
 router.post('/api/profile', authenticate, userController().viewProfile);
 router.post('/api/orders', authenticate, orderController().fetchOrders);
 router.post('/api/contact', authenticate, contactController().contact);
+
+router.get('/api/view-blogs', blogController().showAllBlogs);
+router.get('/api/view-blogs/:slug', blogController().showBlog);
+
 
 module.exports = router;

@@ -41,6 +41,22 @@ class BlogService {
             return null;
         }
     }
+    async fetchBlogs() {
+        try {
+            return await Blog.find()
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+    async fetchBlogWithSlug(slug) {
+        try {
+            return await Blog.findOne({ slug })
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
 }
 
 module.exports = new BlogService()

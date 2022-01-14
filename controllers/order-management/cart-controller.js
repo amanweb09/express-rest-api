@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const Order = require("../../models/Order");
+const orderService = require("../../services/order-service");
 const productService = require("../../services/product-service");
 
 const cartController = () => {
@@ -78,6 +79,72 @@ const cartController = () => {
                     .status(500)
                     .json({ err: 'Something went wrong!' })
             }
+        },
+        async applyPromo(req, res) {
+            const { code, cartAmount } = req.body;
+
+            if (!code || !cartAmount) {
+                return res
+                    .status(422)
+                    .json({ err: "All fields are required!" })
+            }
+
+            //find code in db
+            const promo = await orderService.findPromoCode(code);
+
+            //calculate discount and send to the client
+            if (promo) {
+                if (promo.discountPer && !promo.discountAmt) {
+                    const newAmt = Math.round(cartAmout - cartAmount * promo.discountPer / 100);
+                    return res.status(200).json({
+                        newAmt,
+                        discountType: "per",
+                        isApplied: true
+                    })
+                }
+                else if (promo.discountAmt && !promo.discountPer) {
+                    const newAmt = Math.round(cartAmount - promo.discountAmt);
+                    return res.status(200).json({
+                        newAmt,
+                        discountType: "amt",
+                        isApplied: true
+                    })
+                }
+            }
+            return res.status(404).json({ err: 'Promocode not found!' })
+        },
+        async removePromo(req, res) {
+            const { cartAmount, isApplied, codeApplied, discountType } = req.body;
+
+            if (!cartAmount || !isApplied || !codeApplied || !discountType) {
+                return res
+                    .status(422)
+                    .json({ err: "All fields are required!" })
+            }
+
+            //find code in db
+            const promo = await orderService.findPromoCode(codeApplied);
+
+            if (promo && discountType === 'per') {
+                const discount = promo.discountPer / 100;
+                const den = 1 - discount
+
+                const newAmt = Math.round(cartAmount / den)
+
+                return res.status(200).json({
+                    newAmt,
+                    isRemoved: true
+                })
+            }
+            else if (promo && discountType === 'amt') {
+                const newAmt = Math.round(cartAmount + promo.discountAmt);
+                return res.status(200).json({
+                    newAmt,
+                    isRemoved: true
+                })
+            }
+
+            return res.status(404).json({ err: 'Promocode not found!' })
         }
     }
 }

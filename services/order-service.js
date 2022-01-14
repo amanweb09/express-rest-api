@@ -1,5 +1,6 @@
 const Cancellation = require("../models/Cancellation");
 const Orders = require("../models/Order");
+const PromoCodes = require("../models/Promo-code");
 
 class OrderService {
     async fetchOrder(filter) {
@@ -38,6 +39,19 @@ class OrderService {
         } catch (error) {
             console.log(error);
             return null;
+        }
+    }
+    async findPromoCode(code) {
+        try {
+            return await PromoCodes
+                .findOne(
+                    {
+                        code,
+                        isValid: true
+                    })
+        } catch (error) {
+            console.log(error);
+            throw error;
         }
     }
 }

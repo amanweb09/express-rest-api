@@ -20,6 +20,8 @@ router.get('/api/product', productController().viewProduct);
 
 router.post('/api/checkout', authenticate, cartController().processCart);
 router.post('/api/cancel-order', authenticate, orderController().cancelOrder);
+router.post('/api/apply-promo', authenticate, cartController().applyPromo);
+router.post('/api/remove-promo', authenticate, cartController().removePromo);
 
 router.post('/api/profile', authenticate, userController().viewProfile);
 router.post('/api/orders', authenticate, orderController().fetchOrders);

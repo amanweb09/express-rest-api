@@ -26,12 +26,12 @@ const admin_blogController = () => {
             const blogObj = {
                 title, desc, slug, html, heroImg
             }
-            const {errorType, status, message} = blogValidator(blogObj)
+            const { errorType, status, message } = blogValidator(blogObj)
 
-            if(errorType) {
+            if (errorType) {
                 return res
-                .status(status)
-                .json({ err: message })
+                    .status(status)
+                    .json({ err: message })
             }
             //save the blog
             const saveBlog = blogService

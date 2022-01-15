@@ -5,11 +5,13 @@ const reviewsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
         required: true,
+        unique: false
     },
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'products',
         required: true,
+        unique: false
     },
     stars: {
         type: Number,

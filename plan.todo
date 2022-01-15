@@ -1,0 +1,59 @@
+[+] set up server
+[+] install dependencies
+[+] connect to the local Database
+[+] initialize error handler
+[+] signup user
+    [+] create user model
+    [+] validate with Joi
+    [+] hash password (hmac) using crypto module
+    [+] create user service
+    [+] save user to the database
+[+] login api
+    [+] find user in the database
+    [+] hash password and compare
+    [+] create token service for generating access and refresh tokens
+    [+] send tokens as cookies
+[+] create refresh api (for axios interceptors)
+    [+] validate refresh token
+    [+] generate new access token
+    [+] send token as cookie
+[+] create authenticate middleware
+    [+] validate access token from cookies
+    [+] store user in req object
+[+] order api
+    [+] receive cart from client's local storage
+    [+] find products with ids
+    [+] inject color, size, and qty into the object
+    [+] create order model
+    [+] save order
+[+] promo code api
+    [+] create promocode model
+    [+] receive code and toal cart amount from the client
+    [+] find the promo code in the database
+    [+] alter cart amount according to the discount
+    [+] send the new cart amount to the client
+    [+] reverse the process for removing the code
+[+] reviews api
+    [+] create reviews model (nested with product ID and userId)
+    [+] save the review
+[+] fetch products from the database
+    [+] return all the products from the database
+[+] fetch single product
+    [+] receive product id as params
+    [+] find product by Id
+    [+] create product DTO
+    [+] return the dto
+[+] contact/cancellation api
+    [+] create models
+    [+] validate with Joi
+    [+] save the request to the database
+[+] admin middleware
+    [+] authenticate the user
+    [+] check user role in the database
+[+] fetch orders in the admin panel
+[+] blog api
+    [+] create blog model
+    [+] receive markdown from the client
+    [+] convert markdown to html
+    [+] save to the database
+    

@@ -1,6 +1,7 @@
 const HashingService = require("../../services/hashing-service");
 const UserService = require("../../services/user-service");
 const Joi = require('joi');
+const userValidator = require("../../validators/user-validator");
 
 const signupController = () => {
     return {
@@ -13,41 +14,12 @@ const signupController = () => {
                     .json({ err: 'Please fill all the fields!' })
             }
 
-            const joiSchema = Joi.object({
-                name: Joi
-                    .string()
-                    .min(2)
-                    .required()/* .regex(new RegExp('^[a-zA-Z](3-30)$')) */,
-                email: Joi
-                    .string()
-                    .min(2)
-                    .email({
-                        minDomainSegments: 2,
-                        tlds: {
-                            allow: ['com', 'net', 'in']
-                        }
-                    }).
-                    required(),
-                tel: Joi
-                    .string()
-                    .min(2)
-                    .required()/* .regex('^[0-9](8-12)$') */,
-                password: Joi
-                    .string()
-                    .min(2)
-                    .required()
-            })
+            const { errorType, status, message } = userValidator(req.body)
 
-            const validateRequest = joiSchema.validate(req.body)
-
-            if (validateRequest.error) {
-                const errorType = validateRequest.error.name;
-                const errorMessage = validateRequest.error.message;
-                if (errorType == 'ValidationError') {
-                    return res
-                        .status(422)
-                        .json({ err: errorMessage })
-                }
+            if (errorType) {
+                return res
+                    .status(status)
+                    .json({ err: message })
             }
 
             const user = await UserService.findUser({

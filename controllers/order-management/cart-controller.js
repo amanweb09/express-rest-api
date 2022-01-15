@@ -1,7 +1,7 @@
-const Joi = require("joi");
 const Order = require("../../models/Order");
 const orderService = require("../../services/order-service");
 const productService = require("../../services/product-service");
+const orderValidator = require("../../validators/order-validator");
 
 const cartController = () => {
     return {
@@ -20,28 +20,31 @@ const cartController = () => {
             const { cart, address, isPaid, promoApplied } = req.body;
 
             const products = Object.keys(cart.items)
-            const productsInCart = await productService.findProductsByIds(products);
+            const productsInCart = await productService
+                .findProductsByIds(products);
 
             let orderedProducts = [];
-            productsInCart.forEach((product) => {
-                product = {
-                    ...product,
-                    qty: cart.items[product._id].qty,
-                    color: cart.items[product._id].color,
-                    size: cart.items[product._id].size
-                }
+            productsInCart
+                .forEach((product) => {
+                    product = {
+                        ...product,
+                        qty: cart.items[product._id].qty,
+                        color: cart.items[product._id].color,
+                        size: cart.items[product._id].size
+                    }
 
-                orderedProducts.push(product)
-            })
-            let sortedOrders = []
-            orderedProducts.forEach((product) => {
-                sortedOrders.push({
-                    product: product._doc,
-                    qty: product.qty,
-                    color: product.color,
-                    size: product.size
+                    orderedProducts.push(product)
                 })
-            })
+            let sortedOrders = []
+            orderedProducts
+                .forEach((product) => {
+                    sortedOrders.push({
+                        product: product._doc,
+                        qty: product.qty,
+                        color: product.color,
+                        size: product.size
+                    })
+                })
 
             const orderObj = {
                 customerId: req._id,
@@ -50,37 +53,12 @@ const cartController = () => {
                 address, isPaid, promoApplied
             }
 
-            const orderSchema = Joi.object({
-                customerId: Joi
-                    .required(),
-                products: Joi
-                    .array()
-                    .required(),
-                totalPrice: Joi
-                    .number()
-                    .min(100)
-                    .max(8000)
-                    .required(),
-                address: Joi
-                    .string()
-                    .min(6)
-                    .required(),
-                isPaid: Joi
-                    .boolean()
-                    .required(),
-                promoApplied: Joi
-                    .boolean()
-                    .required(),
-            })
+            const { errorType, status, message } = orderValidator.validateOrder(orderObj)
 
-            const validateOrder = await orderSchema.validate(orderObj)
-
-            if (validateOrder.error) {
-                if (validateOrder.error.name == 'ValidationError') {
-                    return res
-                        .status(422)
-                        .json({ err: validateOrder.error.message })
-                }
+            if (errorType) {
+                return res
+                    .status(status)
+                    .json({ err: message })
             }
 
 
@@ -116,21 +94,26 @@ const cartController = () => {
             if (promo) {
                 if (promo.discountPer && !promo.discountAmt) {
                     const newAmt = Math.round(cartAmout - cartAmount * promo.discountPer / 100);
-                    return res.status(200).json({
-                        newAmt,
-                        discountType: "per",
-                        isApplied: true,
-                        canApply: false
-                    })
+                    return res
+                        .status(200)
+                        .json({
+                            newAmt,
+                            discountType: "per",
+                            isApplied: true,
+                            canApply: false
+                        })
                 }
                 else if (promo.discountAmt && !promo.discountPer) {
-                    const newAmt = Math.round(cartAmount - promo.discountAmt);
-                    return res.status(200).json({
-                        newAmt,
-                        discountType: "amt",
-                        isApplied: true,
-                        canApply: false
-                    })
+                    const newAmt = Math
+                        .round(cartAmount - promo.discountAmt);
+                    return res
+                        .status(200)
+                        .json({
+                            newAmt,
+                            discountType: "amt",
+                            isApplied: true,
+                            canApply: false
+                        })
                 }
             }
             return res.status(404).json({ err: 'Promocode not found!' })
@@ -151,22 +134,29 @@ const cartController = () => {
                 const discount = promo.discountPer / 100;
                 const den = 1 - discount
 
-                const newAmt = Math.round(cartAmount / den)
+                const newAmt = Math
+                    .round(cartAmount / den)
 
-                return res.status(200).json({
-                    newAmt,
-                    canApply: true
-                })
+                return res
+                    .status(200)
+                    .json({
+                        newAmt,
+                        canApply: true
+                    })
             }
             else if (promo && discountType === 'amt') {
                 const newAmt = Math.round(cartAmount + promo.discountAmt);
-                return res.status(200).json({
-                    newAmt,
-                    canApply: true
-                })
+                return res
+                    .status(200)
+                    .json({
+                        newAmt,
+                        canApply: true
+                    })
             }
 
-            return res.status(404).json({ err: 'Promocode not found!' })
+            return res
+                .status(404)
+                .json({ err: 'Promocode not found!' })
         }
     }
 }

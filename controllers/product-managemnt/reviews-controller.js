@@ -8,15 +8,20 @@ module.exports = function reviewsController() {
             const { stars, reviews } = req.body;
 
             if (!stars || !reviews) {
-                return res.status(422).json({ err: 'all fields are required!' })
+                return res
+                    .status(422)
+                    .json({ err: 'all fields are required!' })
             }
 
             //find the product
-            const product = await productService.findProduct(pid)
+            const product = await productService
+                .findProduct(pid)
 
             //validate product is
             if (!product) {
-                return res.status(404).json({ err: 'No product found with this ID!' })
+                return res
+                    .status(404)
+                    .json({ err: 'No product found with this ID!' })
             }
 
             const reviewsObj = {
@@ -32,7 +37,9 @@ module.exports = function reviewsController() {
                 return res.status(201).json({ message: 'Review Saved Successfully!' })
             }
 
-            return res.status(500).json({ err: 'Something went wrong!!' })
+            return res
+                .status(500)
+                .json({ err: 'Something went wrong!!' })
 
         }
     }

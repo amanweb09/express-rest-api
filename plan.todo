@@ -55,5 +55,6 @@
     [+] create blog model
     [+] receive markdown from the client
     [+] convert markdown to html
+    [+] convert title to slug
     [+] save to the database
     
